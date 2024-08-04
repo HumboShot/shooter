@@ -51,3 +51,4 @@ func _physics_process(delta):
 	else:
 		_handle_air_physics(delta)
 	
+	move_and_slide()
