@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://deovbnvdx6asv"]
+[gd_scene load_steps=10 format=3 uid="uid://deovbnvdx6asv"]
 
 [ext_resource type="ArrayMesh" uid="uid://4qts5jku1xv8" path="res://messhes/map_objects/mirror_Cube_001.res" id="1_4pmpm"]
 [ext_resource type="PackedScene" uid="uid://snbae3c3jv5" path="res://FPSController/fps_controller.tscn" id="2_nfhad"]
@@ -23,6 +23,13 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qhatv"]
 data = PackedVector3Array(1, 0.1057, -0.8943, 1, 1.8943, 0.8942, 1, 1.8943, -0.8943, 1, 0.1057, -0.8943, 1, 0.1057, 0.8942, 1, 1.8943, 0.8942, -1, 0, 1, -1, 2, -1, -1, 2, 1, -1, 0, 1, -1, 0, -1, -1, 2, -1, -1, 0, -1, 1, 2, -1, -1, 2, -1, -1, 0, -1, 1, 0, -1, 1, 2, -1, 1, 0, 1, -1, 2, 1, 1, 2, 1, 1, 0, 1, -1, 0, 1, -1, 2, 1, -1, 0, -1, 1, 0, 1, 1, 0, -1, -1, 0, -1, -1, 0, 1, 1, 0, 1, 1, 2, -1, -1, 2, 1, -1, 2, -1, 1, 2, -1, 1, 2, 1, -1, 2, 1, 1, 1.8943, -0.8943, 1, 0, -1, 1, 0.1057, -0.8943, 1, 1.8943, -0.8943, 1, 2, -1, 1, 0, -1, 1, 0.1057, -0.8943, 1, 0, 1, 1, 0.1057, 0.8942, 1, 0.1057, -0.8943, 1, 0, -1, 1, 0, 1, 1, 1.8943, 0.8942, 1, 2, -1, 1, 1.8943, -0.8943, 1, 1.8943, 0.8942, 1, 2, 1, 1, 2, -1, 1, 0.1057, 0.8942, 1, 2, 1, 1, 1.8943, 0.8942, 1, 0.1057, 0.8942, 1, 0, 1, 1, 2, 1)
 
+[sub_resource type="Curve3D" id="Curve3D_nksem"]
+_data = {
+"points": PackedVector3Array(-2.27659, 27.1018, 0, 2.27659, -27.1018, 0, -0.162755, 0.0561132, -0.00773525, -9.88391, -1.49547, 0, 9.88391, 1.49547, 0, 29.4724, -27.7297, -0.00773525),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [node name="DevWorld" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000420094, 0.0154362, 0.00773525)
 
@@ -30,7 +37,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000420094, 0.0154362, 0.00
 environment = SubResource("Environment_8ed86")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.0862605, 0.713815, -0.695002, 0.329344, 0.678814, 0.656311, 0.940261, -0.172281, -0.293646, 0, 3.26226, 0)
+transform = Transform3D(0.103922, 0.966586, -0.234331, 0.324204, 0.189817, 0.926748, 0.940262, -0.172281, -0.293645, 0, 3.26226, 0)
+shadow_enabled = true
 
 [node name="Level" type="Node3D" parent="."]
 
@@ -56,3 +64,22 @@ shape = SubResource("ConcavePolygonShape3D_qhatv")
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("2_nfhad")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(7.245, 0, 0, 0, 7.245, 0, 0, 0, 7.245, 10.5097, 0, 0)
+curve = SubResource("Curve3D_nksem")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0.5, 1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
