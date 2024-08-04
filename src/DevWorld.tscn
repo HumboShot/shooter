@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://deovbnvdx6asv"]
+
+[ext_resource type="ArrayMesh" uid="uid://4qts5jku1xv8" path="res://messhes/map_objects/mirror_Cube_001.res" id="1_4pmpm"]
+[ext_resource type="PackedScene" uid="uid://snbae3c3jv5" path="res://FPSController/fps_controller.tscn" id="2_nfhad"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fw1ca"]
+
+[sub_resource type="Sky" id="Sky_4rixc"]
+sky_material = SubResource("ProceduralSkyMaterial_fw1ca")
+
+[sub_resource type="Environment" id="Environment_8ed86"]
+background_mode = 2
+sky = SubResource("Sky_4rixc")
+ssr_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_4i6kf"]
+
+[node name="DevWorld" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000420094, 0.0154362, 0.00773525)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8ed86")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0862605, 0.713815, -0.695002, 0.329344, 0.678814, 0.656311, 0.940261, -0.172281, -0.293646, 0, 3.26226, 0)
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("BoxMesh_4i6kf")
+skeleton = NodePath("../..")
+
+[node name="MirrorCube001" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.793, 0.5, 0.015)
+mesh = ExtResource("1_4pmpm")
+skeleton = NodePath("../..")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_nfhad")]
