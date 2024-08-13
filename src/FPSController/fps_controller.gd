@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 # This file has been based on this video https://www.youtube.com/watch?v=ZJr2qUrzEqg
 
-@export var look_sensitivity : float = 0.006
+@export var look_sensitivity : float = 0.003
 @export var jump_velocity := 6.0
 @export var auto_bhop := true
 
@@ -14,7 +14,7 @@ extends CharacterBody3D
 @export var ground_friction := 6.0
 
 # Air movement settings
-@export var air_cap := 0.85
+@export var air_cap := 1.4
 @export var air_accel := 800
 @export var air_move_speed := 500
 
