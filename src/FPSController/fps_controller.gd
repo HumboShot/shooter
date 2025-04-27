@@ -23,6 +23,10 @@ const HEADBOB_FREQUENCY = 2.4
 var headbob_time := 0.0
 
 var wish_dir := Vector3.ZERO
+var cam_aligned_wish_dir := Vector3.ZERO
+
+var noclip_speed_multiplier := 3.0
+var noclip = false
 
 func get_move_speed() -> float:
 	return sprint_speed if Input.is_action_pressed("sprint") else walk_speed
@@ -46,6 +50,24 @@ func _unhandled_input(event):
 
 func _process(delta):
 	pass
+	
+func _handle_noclip(delta) -> bool:
+	if Input.is_action_just_pressed("_noclip") and OS.has_feature("debug"):
+		noclip = !noclip
+		
+	$CollisionShape3D.disabled = noclip
+		
+	if not noclip:
+		return false
+		
+	var speed = get_move_speed() * noclip_speed_multiplier
+	if Input.is_action_pressed("sprint"):
+		speed *= 3.0
+	
+	self.velocity = cam_aligned_wish_dir * speed
+	global_position += self.velocity * delta
+	
+	return true	
 	
 # Allows surf
 func clip_velocity(normal: Vector3, overbounce: float, delta: float) -> void:
@@ -111,14 +133,19 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "up", "down").normalized()
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
-	if is_on_floor():
-		if Input.is_action_just_pressed("jump") or (auto_bhop and Input.is_action_pressed("jump")):
-			self.velocity.y = jump_velocity
-		_handle_ground_physics(delta)
-	else:
-		_handle_air_physics(delta)
+	# Used for noclip moving
+	cam_aligned_wish_dir = %Camera3D.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
-	move_and_slide()
+	
+	if not _handle_noclip(delta):
+		if is_on_floor():
+			if Input.is_action_just_pressed("jump") or (auto_bhop and Input.is_action_pressed("jump")):
+				self.velocity.y = jump_velocity
+			_handle_ground_physics(delta)
+		else:
+			_handle_air_physics(delta)
+		
+		move_and_slide()
 
 func _headbob_effect(delta):
 	headbob_time += delta * self.velocity.length()

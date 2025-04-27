@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8bqfbrn7dpmg"]
+
+[sub_resource type="GDScript" id="GDScript_rtl8c"]
+script/source = "extends CharacterBody3D
+
+var speed = 50
+
+func _process(delta: float) -> void:
+	position += transform.basis * Vector3(0,0,-speed) * delta
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v8qja"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_t4vbm"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="Bullet" type="CharacterBody3D"]
+script = SubResource("GDScript_rtl8c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_v8qja")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_t4vbm")

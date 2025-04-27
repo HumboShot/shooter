@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://snbae3c3jv5"]
+[gd_scene load_steps=5 format=3 uid="uid://snbae3c3jv5"]
 
-[ext_resource type="Script" path="res://FPSController/fps_controller.gd" id="1_ruc5c"]
+[ext_resource type="Script" uid="uid://dkmbamhiqp2bo" path="res://FPSController/fps_controller.gd" id="1_ruc5c"]
+[ext_resource type="PackedScene" uid="uid://cccrkfltnt2gl" path="res://models/gun.glb" id="2_x025n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1uh7a"]
 
@@ -27,3 +28,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 [node name="Camera3D" type="Camera3D" parent="Head"]
 unique_name_in_owner = true
 fov = 85.0
+
+[node name="gun" parent="Head/Camera3D" instance=ExtResource("2_x025n")]
+transform = Transform3D(-0.0461825, 0, -0.998933, 0, 1, 0, 0.998933, 0, -0.0461825, 0.298517, -0.173756, -0.341936)
